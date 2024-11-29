@@ -16,4 +16,10 @@ contract MyToken is ERC20, Ownable {
     function burn(uint256 amount) external {
         _burn(msg.sender, amount);
     }
+
+    function transferTokens(address _receiver, uint256 _amount) external {
+        require(balanceOf(msg.sender) >= _amount, "You do not have enough tokens for this transaction");
+        approve(msg.sender, _amount);
+        transferFrom(msg.sender, _receiver, _amount);
+    }
 }

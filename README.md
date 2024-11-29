@@ -4,7 +4,7 @@ This Solidity program demonstrates the use of ERC20 tokens, along with minting, 
 
 ## Description
 
-The program features the minting, burning, and transferring of ERC20 tokens. The contract implements the `ERC20` and `Ownable` interfaces from [OpenZeppelin](https://github.com/OpenZeppelin). The user-defined `mint()` function allows the creation of ERC20 tokens to an account, and the `burn()` function burns tokens on the sender account.
+The program features the minting, burning, and transferring of ERC20 tokens. The contract implements the `ERC20` and `Ownable` interfaces from [OpenZeppelin](https://github.com/OpenZeppelin). The user-defined `mint()` function allows the creation of ERC20 tokens to an account, and the `burn()` function burns tokens on the sender account. Lastly, the `transferTokens()` function transfers tokens from the sender address to a receiver address with a specified amount of tokens.
 
 ## Getting Started
 
@@ -33,10 +33,16 @@ contract MyToken is ERC20, Ownable {
     function burn(uint256 amount) external {
         _burn(msg.sender, amount);
     }
+
+    function transferTokens(address _receiver, uint256 _amount) external {
+        require(balanceOf(msg.sender) >= _amount, "You do not have enough tokens for this transaction");
+        approve(msg.sender, _amount);
+        transferFrom(msg.sender, _receiver, _amount);
+    }
 }
 ```
 
-To compile the code, click on the "Solidity Compiler" tab in the left-hand sidebar. Make sure the "Compiler" option is set to "0.8.13" or newer, and then click on the "Compile CreateToken.sol" button.
+To compile the code, click on the "Solidity Compiler" tab in the left-hand sidebar. Make sure the "Compiler" option is set to "0.8.13" or newer, and then click on the "Compile Token.sol" button.
 
 Once the code is compiled, you can deploy the contract by clicking on the "Deploy & Run Transactions" tab in the left-hand sidebar. Select the "MyToken" contract from the dropdown menu, and then click on the "Deploy" button.
 
